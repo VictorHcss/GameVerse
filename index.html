@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameVerse | Seu Catálogo de Jogos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <!-- Loader -->
+    <div id="pageLoader" class="page-loader">
+        <div class="loader-content">
+            <div class="loader-icon">
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <div class="loader-text">Carregando GameVerse</div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alternador de tema -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun"></i>
+    </div>
+
+    <!-- Botão de favoritos -->
+    <div class="favorites-toggle" id="favoritesToggle">
+        <i class="fas fa-heart"></i>
+        <span class="favorites-count" id="favoritesCount">0</span>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-gamepad"></i>
+                <h1>GameVerse</h1>
+            </div>
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar jogos..." autocomplete="off">
+                    <button id="searchButton">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main>
+        <div class="container">
+            <!-- Filtros -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="platformFilter">Plataforma:</label>
+                    <select id="platformFilter">
+                        <option value="">Todas</option>
+                        <option value="4">PC</option>
+                        <option value="187">PlayStation 5</option>
+                        <option value="18">PlayStation 4</option>
+                        <option value="1">Xbox One</option>
+                        <option value="186">Xbox Series S/X</option>
+                        <option value="7">Nintendo Switch</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="genreFilter">Gênero:</label>
+                    <select id="genreFilter">
+                        <option value="">Todos</option>
+                        <option value="action">Ação</option>
+                        <option value="adventure">Aventura</option>
+                        <option value="rpg">RPG</option>
+                        <option value="shooter">Tiro</option>
+                        <option value="strategy">Estratégia</option>
+                        <option value="puzzle">Puzzle</option>
+                        <option value="racing">Corrida</option>
+                        <option value="sports">Esportes</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="sortFilter">Ordenar por:</label>
+                    <select id="sortFilter">
+                        <option value="-relevance">Relevância</option>
+                        <option value="-rating">Melhor Avaliação</option>
+                        <option value="-released">Mais Recentes</option>
+                        <option value="name">Nome (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Informações dos resultados -->
+            <div class="results-info">
+                <h2>Resultados da Busca</h2>
+                <span id="resultsCount"></span>
+            </div>
+
+            <!-- Estados de carregamento e mensagens -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Carregando jogos...</p>
+            </div>
+
+            <div id="error" class="error hidden">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Ocorreu um erro ao buscar os jogos. Tente novamente.</p>
+            </div>
+
+            <div id="noResults" class="no-results hidden">
+                <i class="fas fa-search"></i>
+                <p>Nenhum jogo encontrado. Tente outra busca.</p>
+            </div>
+
+            <div id="initialMessage" class="initial-message">
+                <i class="fas fa-gamepad"></i>
+                <p>Digite o nome de um jogo para começar a busca</p>
+                <div class="popular-searches">
+                    <p>Buscas populares:</p>
+                    <div class="popular-tags">
+                        <span class="popular-tag" data-search="The Witcher">The Witcher</span>
+                        <span class="popular-tag" data-search="FIFA">FIFA</span>
+                        <span class="popular-tag" data-search="Grand Theft Auto">GTA</span>
+                        <span class="popular-tag" data-search="Call of Duty">Call of Duty</span>
+                        <span class="popular-tag" data-search="Minecraft">Minecraft</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grade de jogos -->
+            <div id="gameGrid" class="games-grid"></div>
+
+            <!-- Paginação -->
+            <div id="pagination" class="pagination hidden">
+                <button id="prevPage" class="pagination-btn" disabled>
+                    <i class="fas fa-chevron-left"></i> Anterior
+                </button>
+                <span id="pageInfo">Página 1</span>
+                <button id="nextPage" class="pagination-btn">
+                    Próxima <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-gamepad"></i>
+                    <span>GameVerse</span>
+                </div>
+                <div class="footer-text">
+                    <p>Desenvolvido por <i class="fa-solid fa-v"></i> | Dados fornecidos pela API RAWG</p>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de detalhes do jogo -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div id="modalContent" class="modal-body">
+                <!-- Conteúdo do modal será inserido aqui -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de comparação -->
+    <div id="compareModal" class="modal">
+        <div class="modal-content compare-modal-content">
+            <span class="close-modal" id="closeCompareModal">&times;</span>
+            <div class="compare-header">
+                <h2>Comparação de Jogos</h2>
+            </div>
+            <div id="compareContent" class="compare-content">
+                <!-- Conteúdo da comparação será inserido aqui -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de favoritos -->
+    <div id="favoritesModal" class="modal">
+        <div class="modal-content favorites-modal-content">
+            <span class="close-modal" id="closeFavoritesModal">&times;</span>
+            <div class="favorites-header">
+                <h2>Meus Jogos Favoritos</h2>
+                <button id="clearFavorites" class="clear-favorites-btn">
+                    <i class="fas fa-trash"></i> Limpar Todos
+                </button>
+            </div>
+            <div id="favoritesContent" class="favorites-content">
+                <!-- Conteúdo dos favoritos será inserido aqui -->
+            </div>
+            <div id="noFavorites" class="no-favorites hidden">
+                <i class="fas fa-heart-broken"></i>
+                <p>Você ainda não adicionou nenhum jogo aos favoritos.</p>
+                <p>Clique no ícone <i class="fas fa-heart"></i> em qualquer jogo para adicioná-lo aqui.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barra de comparação -->
+    <div id="compareBar" class="compare-bar hidden">
+        <div class="compare-games-container" id="compareGamesContainer">
+            <!-- Jogos selecionados para comparação serão adicionados aqui -->
+        </div>
+        <div class="compare-actions">
+            <button id="compareButton" class="compare-button" disabled>
+                <i class="fas fa-columns"></i> Comparar
+            </button>
+            <button id="clearCompareButton" class="clear-compare-button">
+                <i class="fas fa-times"></i> Limpar
+            </button>
+        </div>
+    </div>
+
+    <!-- Notificações -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>
