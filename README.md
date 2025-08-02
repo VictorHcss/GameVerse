@@ -6,7 +6,7 @@
 
 ## 📸 Demonstração
 
-![preview](https://user-images.githubusercontent.com/seu-usuario/aqui-entra-um-print-ou-gif.gif)
+![preview](https://raw.githubusercontent.com/VictorHcss/GameVerse/refs/heads/main/image.png)
 
 ---
 
